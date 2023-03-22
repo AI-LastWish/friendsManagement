@@ -4,8 +4,6 @@ services:
     container_name: friendsmgmt-pg
     image: postgres:latest
     restart: always
-    env_file:
-      - .env
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -25,10 +23,11 @@ services:
       - "8080:8080"
     depends_on:
       - database
+    links:
+      - database
+    restart: always
     build:
       context: .
       dockerfile: Dockerfile
     env_file:
       - .env
-volumes:
-  postgres-data:

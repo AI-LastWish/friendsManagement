@@ -1,5 +1,3 @@
-# syntax=docker/dockerfile:1
-
 ##
 ## STEP 1 - BUILD
 ##
@@ -20,7 +18,7 @@ COPY . .
 RUN go mod download
 
 # compile application
-RUN go build -o /friendsmgmtapi ./api/cmd/friendsmgmtsrv/main.go ./api/cmd/friendsmgmtsrv/router.go
+RUN go build -o /friendsmgmtapi ./api/cmd/friendsmgmtsrv
 
 ##
 ## STEP 2 - DEPLOY
@@ -29,4 +27,4 @@ FROM scratch
 WORKDIR /
 COPY --from=builder /friendsmgmtapi /friendsmgmtapi
 
-ENTRYPOINT ["./friendsmgmtapi"]
+ENTRYPOINT ["/friendsmgmtapi"]
