@@ -6,7 +6,7 @@ require github.com/jackc/pgconn v1.14.0
 
 require (
 	github.com/jackc/pgtype v1.14.0 // indirect
-	github.com/mcnijman/go-emailaddress v1.1.0 // indirect
+	github.com/mcnijman/go-emailaddress v1.1.0
 	golang.org/x/net v0.8.0 // indirect
 )
 

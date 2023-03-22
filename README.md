@@ -2,6 +2,10 @@
 
 ## How to run
 
-In the project directory, you can run:
+To run the project:
 
-### `docker-compose up -d`
+### `docker compose up -d`
+
+Import Postman collection from this file:
+
+### /api/pkg/postman/friendsManagement.postman_collection.json

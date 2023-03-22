@@ -82,7 +82,7 @@ func (repo *UserRepository) Get(email string) (models.User, error) {
 
 }
 
-// Verify whether requestor has already blocked target or not
+// IsBlock: verify whether requestor has already blocked target or not
 func (repo *UserRepository) IsBlock(requestor string, target string) (mod.IsBlock, error) {
 	isBlock := mod.IsBlock{}
 
