@@ -5,11 +5,6 @@ type UserResponse struct {
 	Message string
 }
 
-// IsBlock: mod for checking whether a requestor has blocked target or not
-type IsBlock struct {
-	Blocked bool
-}
-
 // FriendList: mod for friend list
 type FriendList struct {
 	Success bool

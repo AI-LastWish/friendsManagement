@@ -32,12 +32,12 @@ type UserControllerInterface interface {
 
 // UserController: User Controller
 type UserController struct {
-	repo user.Repository
+	userRepo user.Repository
 }
 
 // NewUserController: Create new User Controller
 func NewUserController(r user.Repository) *UserController {
 	return &UserController{
-		repo: r,
+		userRepo: r,
 	}
 }

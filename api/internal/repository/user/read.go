@@ -8,7 +8,6 @@ import (
 
 	"github.com/lib/pq"
 
-	"backend/api/internal/mod"
 	"backend/api/internal/models"
 	"backend/api/pkg/constants"
 )
@@ -83,8 +82,8 @@ func (repo *UserRepository) Get(email string) (models.User, error) {
 }
 
 // IsBlock: verify whether requestor has already blocked target or not
-func (repo *UserRepository) IsBlock(requestor string, target string) (mod.IsBlock, error) {
-	isBlock := mod.IsBlock{}
+func (repo *UserRepository) IsBlock(requestor string, target string) (bool, error) {
+	isBlock := false
 
 	if requestor == target {
 		return isBlock, errors.New("2 input emails are the same")
@@ -108,7 +107,7 @@ func (repo *UserRepository) IsBlock(requestor string, target string) (mod.IsBloc
 	row := repo.db.QueryRowContext(ctx, query, requestor, target)
 
 	err = row.Scan(
-		isBlock.Blocked,
+		isBlock,
 	)
 
 	if err != nil {

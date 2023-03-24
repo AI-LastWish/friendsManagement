@@ -27,8 +27,7 @@ func openDB(dsn string) (*sql.DB, error) {
 		return nil, pkgErr.WithStack(err)
 	}
 
-	err = db.Ping()
-	if err != nil {
+	if err = db.Ping(); err != nil {
 		return nil, pkgErr.WithStack(err)
 	}
 

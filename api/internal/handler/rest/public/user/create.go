@@ -4,6 +4,7 @@ import (
 	"errors"
 	"net/http"
 
+	"backend/api/internal/presenter"
 	"backend/api/pkg/utils"
 )
 
@@ -25,10 +26,15 @@ func (handler UserHandler) CreateFriendship() (handlerFn http.HandlerFunc) {
 		email := requestPayload.Friends[0]
 		friend := requestPayload.Friends[1]
 
-		resp, er := handler.controller.CreateFriendship(email, friend)
+		modUserResp, er := handler.controller.CreateFriendship(email, friend)
 		if er != nil {
 			utils.ErrorJSON(w, er)
 			return
+		}
+
+		resp := presenter.UserResponse{
+			Success: modUserResp.Success,
+			Message: modUserResp.Message,
 		}
 
 		utils.WriteJSON(w, http.StatusOK, resp)
@@ -49,10 +55,15 @@ func (handler UserHandler) CreateSubscribe() (handlerFn http.HandlerFunc) {
 		requestor := requestPayload.Requestor
 		target := requestPayload.Target
 
-		resp, er := handler.controller.CreateSubscribe(requestor, target)
+		modUserResp, er := handler.controller.CreateSubscribe(requestor, target)
 		if er != nil {
 			utils.ErrorJSON(w, er)
 			return
+		}
+
+		resp := presenter.UserResponse{
+			Success: modUserResp.Success,
+			Message: modUserResp.Message,
 		}
 
 		utils.WriteJSON(w, http.StatusOK, resp)
@@ -79,7 +90,7 @@ func (handler UserHandler) CreateBlock() (handlerFn http.HandlerFunc) {
 			return
 		}
 
-		resp := utils.JSONResponse{
+		resp := presenter.UserResponse{
 			Success: true,
 			Message: "connection was blocked successfully",
 		}

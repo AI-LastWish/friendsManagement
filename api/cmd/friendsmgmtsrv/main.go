@@ -1,6 +1,7 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
 	"log"
 	"net/http"
@@ -20,13 +21,16 @@ func main() {
 	dataSourceName := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable timezone=UTC connect_timeout=5",
 		os.Getenv(constants.DB_HOST), os.Getenv(constants.DB_PORT), os.Getenv(constants.DB_USER), os.Getenv(constants.DB_PASSWORD), os.Getenv(constants.DB_DATABASE))
 
-	// connect to the database
 	conn, err := db.Connect(dataSourceName)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
 	defer conn.Close()
 
+	initServer(conn)
+}
+
+func initServer(conn *sql.DB) {
 	userRepo := repository.NewUserRepo(conn)
 	userController := controller.NewUserController(userRepo)
 	userHandler := handler.NewUserHandler(*userController)
@@ -35,7 +39,7 @@ func main() {
 	log.Println("Starting application on port", os.Getenv(constants.API_PORT))
 
 	// start a web server
-	if err = http.ListenAndServe(fmt.Sprintf(":%s", os.Getenv(constants.API_PORT)), userRouter.routes()); err != nil {
+	if err := http.ListenAndServe(fmt.Sprintf(":%s", os.Getenv(constants.API_PORT)), userRouter.routes()); err != nil {
 		log.Fatal(pkgErr.WithStack(err))
 	}
 }
