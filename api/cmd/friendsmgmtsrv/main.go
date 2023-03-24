@@ -6,12 +6,12 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/go-chi/chi/v5"
 	_ "github.com/joho/godotenv/autoload"
 	pkgErr "github.com/pkg/errors"
 
 	"backend/api/internal/app/db"
 	controller "backend/api/internal/controller/user"
+	handler "backend/api/internal/handler/rest/public/user"
 	repository "backend/api/internal/repository/user"
 	"backend/api/pkg/constants"
 )
@@ -27,16 +27,15 @@ func main() {
 	}
 	defer conn.Close()
 
-	// create a router mux
-	router := chi.NewRouter()
-
 	userRepo := repository.NewUserRepo(conn)
 	userController := controller.NewUserController(userRepo)
+	userHandler := handler.NewUserHandler(*userController)
+	userRouter := NewUserRouter(*userHandler)
 
 	log.Println("Starting application on port", os.Getenv(constants.API_PORT))
 
 	// start a web server
-	if err = http.ListenAndServe(fmt.Sprintf(":%s", os.Getenv(constants.API_PORT)), Routes(router, userController)); err != nil {
+	if err = http.ListenAndServe(fmt.Sprintf(":%s", os.Getenv(constants.API_PORT)), userRouter.routes()); err != nil {
 		log.Fatal(pkgErr.WithStack(err))
 	}
 }

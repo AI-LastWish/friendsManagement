@@ -5,20 +5,34 @@ import (
 
 	"github.com/go-chi/chi/v5"
 
-	controller "backend/api/internal/controller/user"
-	handler "backend/api/internal/handler/rest/public"
+	"backend/api/internal/handler/rest/public/user"
 )
 
-// Routes: Router of users
-func Routes(router *chi.Mux, controller controller.UserInterface) http.Handler {
-	router.Get("/users", handler.List(controller))
-	router.Post("/user", handler.Get(controller))
-	router.Post("/invite", handler.CreateFriendship(controller))
-	router.Post("/friends", handler.GetFriendList(controller))
-	router.Post("/common", handler.GetCommonFriends(controller))
-	router.Post("/subscribe", handler.CreateSubscribe(controller))
-	router.Post("/blocks", handler.CreateBlock(controller))
-	router.Post("/retrieve", handler.GetRetrieveUpdates(controller))
+// UserRouter: User Router
+type UserRouter struct {
+	handler user.UserHandler
+	router  *chi.Mux
+}
 
-	return router
+// NewUserRouter: create new user Router
+func NewUserRouter(r user.UserHandler) *UserRouter {
+	router := chi.NewRouter()
+	return &UserRouter{
+		handler: r,
+		router:  router,
+	}
+}
+
+// Routes: Router of users
+func (r UserRouter) routes() http.Handler {
+	r.router.Get("/users", r.handler.List())
+	r.router.Post("/user", r.handler.Get())
+	r.router.Post("/invite", r.handler.CreateFriendship())
+	r.router.Post("/friends", r.handler.GetFriendList())
+	r.router.Post("/common", r.handler.GetCommonFriends())
+	r.router.Post("/subscribe", r.handler.CreateSubscribe())
+	r.router.Post("/blocks", r.handler.CreateBlock())
+	r.router.Post("/retrieve", r.handler.GetRetrieveUpdates())
+
+	return r.router
 }

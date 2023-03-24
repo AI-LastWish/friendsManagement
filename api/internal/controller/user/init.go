@@ -24,8 +24,8 @@ type Writer interface {
 	CreateBlock(requestor string, target string) error
 }
 
-// UserInterface interface
-type UserInterface interface {
+// UserControllerInterface interface
+type UserControllerInterface interface {
 	Reader
 	Writer
 }
