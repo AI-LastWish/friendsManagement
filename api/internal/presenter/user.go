@@ -14,11 +14,6 @@ type User struct {
 	UpdatedAt time.Time `json:"-"`
 }
 
-// IsBlock: responsible for checking whether a requestor has blocked target or not
-type IsBlock struct {
-	Blocked bool `json:"blocked"`
-}
-
 // FriendList: responsible for formatting list of friends as a response
 type FriendList struct {
 	Success bool     `json:"success"`
@@ -31,4 +26,9 @@ type RetrieveUpdates struct {
 	Success    bool     `json:"success"`
 	Message    string   `json:"message"`
 	Recipients []string `json:"recipients"`
+}
+
+type UserResponse struct {
+	Success bool   `json:"success"`
+	Message string `json:"message"`
 }

@@ -10,7 +10,7 @@ import (
 
 // List: Get all users
 func (c UserController) List() ([]models.User, error) {
-	data, err := c.repo.List()
+	data, err := c.userRepo.List()
 
 	if err != nil {
 		return nil, err
@@ -35,7 +35,7 @@ func (c UserController) List() ([]models.User, error) {
 
 // Get: Get single user by email
 func (c UserController) Get(email string) (models.User, error) {
-	data, err := c.repo.Get(email)
+	data, err := c.userRepo.Get(email)
 
 	if err != nil {
 		return data, err
@@ -46,7 +46,7 @@ func (c UserController) Get(email string) (models.User, error) {
 
 // GetFriendList: retrieve the friends list for an email address.
 func (c UserController) GetFriendList(email string) (mod.FriendList, error) {
-	data, err := c.repo.Get(email)
+	data, err := c.userRepo.Get(email)
 	resp := mod.FriendList{}
 
 	if err != nil {
@@ -71,13 +71,13 @@ func (c UserController) GetFriendList(email string) (mod.FriendList, error) {
 
 // GetCommonFriends: retrieve the common friends list between two email addresses.
 func (c UserController) GetCommonFriends(email string, friend string) (mod.FriendList, error) {
-	users1, err1 := c.repo.Get(email)
+	users1, err1 := c.userRepo.Get(email)
 	resp := mod.FriendList{}
 	if err1 != nil {
 		return resp, err1
 	}
 
-	users2, err2 := c.repo.Get(friend)
+	users2, err2 := c.userRepo.Get(friend)
 	if err2 != nil {
 		return resp, err2
 	}
@@ -111,7 +111,7 @@ func (c UserController) GetCommonFriends(email string, friend string) (mod.Frien
 
 // GetRetrieveUpdates: retrieve all email addresses that can receive updates from an email address.
 func (c UserController) GetRetrieveUpdates(sender string, mentions []*emailaddress.EmailAddress) (mod.RetrieveUpdates, error) {
-	data, err := c.repo.Get(sender)
+	data, err := c.userRepo.Get(sender)
 	resp := mod.RetrieveUpdates{}
 	if err != nil {
 		return resp, err

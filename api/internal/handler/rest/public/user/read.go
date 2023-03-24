@@ -46,13 +46,24 @@ func (handler UserHandler) Get() (handlerFn http.HandlerFunc) {
 			return
 		}
 
-		users, err := handler.controller.Get(requestPayload.Email)
+		user, err := handler.controller.Get(requestPayload.Email)
+
+		resp := presenter.User{
+			ID:        user.ID,
+			Name:      user.Name,
+			Email:     user.Email,
+			Friends:   user.Friends,
+			Subscribe: user.Subscribe,
+			Blocks:    user.Blocks,
+			CreatedAt: user.CreatedAt,
+			UpdatedAt: user.UpdatedAt,
+		}
 		if err != nil {
 			utils.ErrorJSON(w, err)
 			return
 		}
 
-		utils.WriteJSON(w, http.StatusOK, users)
+		utils.WriteJSON(w, http.StatusOK, resp)
 	})
 }
 
@@ -75,7 +86,13 @@ func (handler UserHandler) GetFriendList() (handlerFn http.HandlerFunc) {
 			return
 		}
 
-		utils.WriteJSON(w, http.StatusOK, friendList)
+		resp := presenter.FriendList{
+			Success: friendList.Success,
+			Friends: friendList.Friends,
+			Count:   friendList.Count,
+		}
+
+		utils.WriteJSON(w, http.StatusOK, resp)
 	})
 }
 
@@ -103,7 +120,13 @@ func (handler UserHandler) GetCommonFriends() (handlerFn http.HandlerFunc) {
 			return
 		}
 
-		utils.WriteJSON(w, http.StatusOK, friendList)
+		resp := presenter.FriendList{
+			Success: friendList.Success,
+			Friends: friendList.Friends,
+			Count:   friendList.Count,
+		}
+
+		utils.WriteJSON(w, http.StatusOK, resp)
 	})
 }
 
@@ -128,6 +151,12 @@ func (handler UserHandler) GetRetrieveUpdates() (handlerFn http.HandlerFunc) {
 			return
 		}
 
-		utils.WriteJSON(w, http.StatusOK, retrieveUpdatesResp)
+		resp := presenter.RetrieveUpdates{
+			Success:    retrieveUpdatesResp.Success,
+			Message:    retrieveUpdatesResp.Message,
+			Recipients: retrieveUpdatesResp.Recipients,
+		}
+
+		utils.WriteJSON(w, http.StatusOK, resp)
 	})
 }

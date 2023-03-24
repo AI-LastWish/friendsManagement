@@ -25,12 +25,12 @@ func (repo *UserRepository) CreateRelationship(email string, friend string, stmt
 		return errFriend
 	}
 
-	_, er := repo.db.ExecContext(ctx, stmt,
+	_, err = repo.db.ExecContext(ctx, stmt,
 		email,
 		friend,
 	)
-	if er != nil {
-		fmt.Println("er", er)
+	if err != nil {
+		fmt.Println("er", err)
 		return err
 	}
 
