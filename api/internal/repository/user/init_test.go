@@ -17,11 +17,11 @@ import (
 )
 
 var (
-	DB_HOST     = "database"
+	DB_HOST     = "localhost"
 	DB_USER     = "postgres"
 	DB_PASSWORD = "postgres"
-	DB_DATABASE = "backend"
-	DB_PORT     = "5432"
+	DB_DATABASE = "backend_test"
+	DB_PORT     = "5435"
 	dsn         = "host=%s port=%s user=%s password=%s dbname=%s sslmode=disable timezone=UTC connect_timeout=5"
 )
 

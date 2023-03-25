@@ -31,7 +31,7 @@ ALTER TABLE public.user ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
 --
 
 insert into public.user (name, email, friends, subscribe, created_at, updated_at) values ('Tom Nguyen', 'tom@test.com', ARRAY [ 'andrew@test.com','peter@test.com' ], ARRAY [ 'donald@test.com','peter@test.com' ], '2022-08-23 00:00:00', '2022-09-23 00:00:00');
-insert into public.user (name, email, created_at, updated_at) values ('Andrew Do', 'andrew@test.com', '2022-10-21 00:00:00', '2022-11-21 00:00:00');
+insert into public.user (name, email, friends, blocks, created_at, updated_at) values ('Andrew Do', 'andrew@test.com', ARRAY [ 'andrew@test.com' ], ARRAY [ 'tom@test.com' ], '2022-08-23 00:00:00', '2022-09-23 00:00:00');
 insert into public.user (name, email, created_at, updated_at) values ('Peter Do', 'peter@test.com', '2022-11-21 00:00:00', '2022-12-21 00:00:00');
 insert into public.user (name, email, created_at, updated_at) values ('Donald Tran', 'donald@test.com', '2021-07-21 00:00:00', '2021-07-21 00:00:00');
 

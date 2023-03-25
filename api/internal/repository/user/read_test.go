@@ -13,7 +13,7 @@ func TestRepoList(t *testing.T) {
 	}
 
 	if len(users) != 4 {
-		t.Errorf("all users reports wrong size; expected 1, but got %d", len(users))
+		t.Errorf("Repo List reports wrong size; expected 1, but got %d", len(users))
 	}
 }
 
@@ -24,7 +24,7 @@ func TestRepoGet(t *testing.T) {
 	}
 
 	if user.Email != "tom@test.com" {
-		t.Errorf("wrong email returned by GetUser; expected admin@example.com but got %s", user.Email)
+		t.Errorf("wrong email returned by GetUser; expected tom@test.com but got %s", user.Email)
 	}
 
 	_, err = testRepo.Get("tom1@test.com")

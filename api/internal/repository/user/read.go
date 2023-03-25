@@ -107,7 +107,7 @@ func (repo *UserRepository) IsBlock(requestor string, target string) (bool, erro
 	row := repo.db.QueryRowContext(ctx, query, requestor, target)
 
 	err = row.Scan(
-		isBlock,
+		&isBlock,
 	)
 
 	if err != nil {
